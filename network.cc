@@ -56,13 +56,13 @@ NetworkGraph FromGraph(Graph graph)
 	}
 
 	// wire edges
-	for(auto &v : vertice_array)
+	for(Vertex &v : vertice_array)
 	{
 		int i = 0;
-		for(auto &e : v.GetEdges()) {
+		for(Edge &e : v.GetEdges()) {
 
-			const Vertex vCon = vertice_array[i];
-			e.CreateConnection(&v, &vCon);
+			Vertex vCon = vertice_array[i];
+			e.CreateConnection(v, vCon);
 			i++;
 		}
 	}

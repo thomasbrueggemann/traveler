@@ -16,7 +16,7 @@
 
 using namespace std;
 
-int main(int argc, const char * argv[])
+int main(int argc, const char *argv[])
 {
 	cout << "TRAVELER v1.0" << endl;
 	cout << "=============" << endl;

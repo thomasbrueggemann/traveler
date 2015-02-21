@@ -18,7 +18,7 @@ private:
 public:
 	Edge();
 	Edge(float weight);
-	void CreateConnection(const Vertex &source, const Vertex &destination);
+	void CreateConnection(Vertex &source, Vertex &destination);
 	float GetWeight();
 	Vertex GetSource();
 	Vertex GetDestination();

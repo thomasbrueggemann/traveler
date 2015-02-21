@@ -3,17 +3,21 @@
 
 #include <iostream>
 #include <string>
+#include <memory>
 
 #include "vertex.h"
 
+class Vertex;
 class Edge
 {
 private:
-	Vertex between[2];
+	Vertex *source;
+	Vertex *destination;
 	float weight;
 public:
+	Edge();
 	Edge(float weight);
-	void CreateConnection(Vertex source, Vertex destination);
+	void CreateConnection(const Vertex &source, const Vertex &destination);
 	float GetWeight();
 	Vertex GetSource();
 	Vertex GetDestination();

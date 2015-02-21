@@ -1,16 +1,17 @@
 #include "edge.h"
  
 // Edge constructor
+Edge::Edge() {}
 Edge::Edge(float weight)
 {
 	this->weight = weight;
 }
 
 // CREATE CONNECTION
-void Edge::CreateConnection(Vertex source, Vertex destination) 
+void Edge::CreateConnection(const Vertex &source, const Vertex &destination) 
 {
-	this->between[0] = source;
-	this->between[1] = destination;
+	this->source = &source;
+	this->destination = &destination;
 }
  
 // GET WEIGHT
@@ -22,11 +23,11 @@ float Edge::GetWeight()
 // GET SOURCE
 Vertex Edge::GetSource()
 {
-	return this->between[0];
+	return *this->source;
 }
 
 // GET DESTINATION
 Vertex Edge::GetDestination()
 {
-	return this->between[1];
+	return *this->destination;
 }

@@ -3,7 +3,7 @@ CC	= g++-4.9
 CFLAGS	= -Wall -g 
 LDFLAGS	= -L${PREFIX}/lib -pthread -lboost_system -lboost_thread
 EXE = traveler
-OBJ = edge.o vertex.o
+OBJ = vertex.o edge.o
 INC =
 
 all: $(EXE)

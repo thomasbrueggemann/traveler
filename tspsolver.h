@@ -4,12 +4,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <boost/lexical_cast.hpp>
 
 #include "edge.h"
 #include "vertex.h"
 #include "network.h"
 
-#define DEBUG false
+#define DEBUG true
+
+using namespace std::chrono;
 
 typedef std::vector<Vertex> Path;
 
@@ -27,13 +31,17 @@ private:
 
 	Vertex currentNode; // represents the node where we are at right now
 	Path s;
-	Path v;
+	std::vector<std::vector<Vertex>> v;
 	Path u;
-
-	float CalculatePathCosts();
 
 public:
 	TSPSolver(NetworkGraph network, int start_node);
+
+	float CalculatePathCosts(Path s);
+	void SetStartNode(int start_node);
+	//void SetPartialProblem(Path path);
+	Path GetUnvisitedNodes(Path s);
+	void Solve(int max_steps);
 };
 
 #endif

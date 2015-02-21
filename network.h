@@ -8,8 +8,6 @@
 #include "edge.h"
 #include "vertex.h"
 
-#define INFINITY -1.0
-
 typedef std::vector<float> Graph;
 typedef std::vector<Vertex> NetworkGraph;
 

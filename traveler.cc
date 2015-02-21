@@ -8,6 +8,8 @@
 #include <iostream>
 #include <vector>
 
+#define EXIT_SUCCESS 0
+
 using namespace std;
 
 int main(int argc, const char * argv[])

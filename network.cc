@@ -4,7 +4,7 @@
 Network::Network() {}
 
 // FROM GRAPH
-NetworkGraph FromGraph(Graph graph)
+NetworkGraph Network::FromGraph(Graph graph)
 {
 	int vertices = 0;
 

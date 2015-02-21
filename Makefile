@@ -1,9 +1,9 @@
 PREFIX?=/usr/local
 CC	= g++-4.9
-CFLAGS	= -Wall -g 
+CFLAGS	= -Wall -g -std=c++11
 LDFLAGS	= -L${PREFIX}/lib -pthread -lboost_system -lboost_thread
 EXE = traveler
-OBJ = vertex.o edge.o
+OBJ =  tspsolver.o network.o vertex.o edge.o
 INC =
 
 all: $(EXE)

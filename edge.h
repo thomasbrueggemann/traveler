@@ -14,6 +14,7 @@ private:
 	Vertex *source;
 	Vertex *destination;
 	float weight;
+	
 public:
 	Edge();
 	Edge(float weight);

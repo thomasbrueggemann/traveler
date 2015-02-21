@@ -10,6 +10,7 @@
 
 #include "edge.h"
 #include "vertex.h"
+#include "network.h"
 
 #define EXIT_SUCCESS 0
 

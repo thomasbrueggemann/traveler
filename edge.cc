@@ -8,7 +8,7 @@ Edge::Edge(float weight)
 }
 
 // CREATE CONNECTION
-void Edge::CreateConnection(const Vertex &source, const Vertex &destination) 
+void Edge::CreateConnection(Vertex &source, Vertex &destination) 
 {
 	this->source = &source;
 	this->destination = &destination;

@@ -41,6 +41,7 @@ public:
 	void SetStartNode(int start_node);
 	//void SetPartialProblem(Path path);
 	Path GetUnvisitedNodes(Path s);
+	static bool SortByMinPath(const Vertex a, const Vertex b);
 	void Solve(int max_steps);
 };
 

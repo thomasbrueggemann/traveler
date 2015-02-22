@@ -149,8 +149,8 @@ void TSPSolver::Solve(int max_steps)
 	if(this->s.size() == 0) 
 	{
 		this->s.push_back(this->currentNode);
-		//std::vector<Vertex> empty;
-		//this->v.push_back(empty);
+		std::vector<Vertex> empty;
+		this->v.push_back(empty);
 	}
 
 	while(this->u.size() > 0)
@@ -174,6 +174,50 @@ void TSPSolver::Solve(int max_steps)
 				// sort by min path
 				sortstruct s(this);
 				std::sort(this->u.begin(), this->u.end(), s);
+			}
+
+			this->currentNode = this->u[0];
+			this->u.erase(this->u.begin());
+		}
+
+		// no traversal possible
+		else
+		{
+			// calculate pathcosts if we are in a complete path
+			if(this->s.size() == this->network.size())
+			{
+				float pathCost = this->CalculatePathCosts(this->s); 
+				if(pathCost < this->best_cost)
+				{
+					this->best_cost = pathCost;
+					Path bestPath(this->s);
+					this->best_path = bestPath;
+
+					// TODO: callback best costs
+				}
+			}
+
+			if(this->s.size() > 0)
+			{
+				this->v[this->s.size() - 2].push_back(this->s.back());
+				this->s.pop_back();
+				this->currentNode = this->s[this->s.size() - 1];
+			}
+			// end of tree, finish
+			else 
+			{
+				// we pop our root node, so we are done
+				this->s.pop_back();
+			}
+		}
+
+		// we got a complete path, print it
+		if(this->s.size() == this->network.size())
+		{
+			std::vector<std::string> printPath;
+			for(Vertex &node : this->s)
+			{
+				printPath.push_back(node.GetName());
 			}
 		}
 	}

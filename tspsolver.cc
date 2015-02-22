@@ -132,12 +132,6 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 	return u;
 }
 
-static bool TSPSolver::SortByMinPath(const Vertex a, const Vertex b)
-{
-	return (a.FindEdgeTo(this->currentNode)->GetWeight() < 
-			b.FindEdgeTo(this->currentNode)->GetWeight());
-}
-
 // SOLVE
 // Solve the traveling salesman problem through an iterative backtracking
 void TSPSolver::Solve(int max_steps)
@@ -178,7 +172,8 @@ void TSPSolver::Solve(int max_steps)
 			if(this->min_heuristic == true)
 			{
 				// sort by min path
-				std::sort(this->u.begin(), this->u.end(), this->SortByMinPath);
+				sortstruct s(this);
+				std::sort(this->u.begin(), this->u.end(), s);
 			}
 		}
 	}

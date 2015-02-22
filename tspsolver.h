@@ -34,6 +34,23 @@ private:
 	std::vector<std::vector<Vertex>> v;
 	Path u;
 
+	struct sortstruct
+	{
+		// sortstruct needs to know its containing object
+		TSPSolver* m;
+		sortstruct(TSPSolver* p) : m(p) {};
+ 
+		// this is our sort function, which makes use
+		// of some non-static data (sortascending)
+		bool operator() (Vertex a, Vertex &b)
+		{
+			Edge *eA = a.FindEdgeTo(m->currentNode);
+			Edge *eB = b.FindEdgeTo(m->currentNode);
+
+			return (eA->GetWeight() < eB->GetWeight());
+		}
+	};
+
 public:
 	TSPSolver(NetworkGraph network, int start_node);
 
@@ -41,7 +58,6 @@ public:
 	void SetStartNode(int start_node);
 	//void SetPartialProblem(Path path);
 	Path GetUnvisitedNodes(Path s);
-	static bool SortByMinPath(const Vertex a, const Vertex b);
 	void Solve(int max_steps);
 };
 

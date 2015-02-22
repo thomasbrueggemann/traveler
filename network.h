@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <boost/lexical_cast.hpp>
 
 #include "edge.h"
 #include "vertex.h"

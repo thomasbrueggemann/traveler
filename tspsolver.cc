@@ -214,11 +214,16 @@ void TSPSolver::Solve(int max_steps)
 		// we got a complete path, print it
 		if(this->s.size() == this->network.size())
 		{
-			std::vector<std::string> printPath;
 			for(Vertex &node : this->s)
 			{
-				printPath.push_back(node.GetName());
+				std::cout << node.GetName() << std::endl;
 			}
 		}
 	}
+}
+
+// GET BEST PATH
+Path TSPSolver::GetBestPath()
+{
+	return this->best_path;
 }

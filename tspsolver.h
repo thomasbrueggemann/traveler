@@ -59,6 +59,7 @@ public:
 	//void SetPartialProblem(Path path);
 	Path GetUnvisitedNodes(Path s);
 	void Solve(int max_steps);
+	Path GetBestPath();
 };
 
 #endif

@@ -8,10 +8,10 @@ Edge::Edge(float weight)
 }
 
 // CREATE CONNECTION
-void Edge::CreateConnection(Vertex &source, Vertex &destination) 
+void Edge::CreateConnection(Vertex& source, Vertex& destination) 
 {
-	this->source = &source;
-	this->destination = &destination;
+	this->source = source.GetName();
+	this->destination = destination.GetName();
 }
  
 // GET WEIGHT
@@ -21,13 +21,13 @@ float Edge::GetWeight()
 }
 
 // GET SOURCE
-Vertex Edge::GetSource()
+Vertex Edge::GetSource(NetworkGraph& graph)
 {
-	return *this->source;
+	return graph[this->source];
 }
 
 // GET DESTINATION
-Vertex Edge::GetDestination()
+Vertex Edge::GetDestination(NetworkGraph& graph)
 {
-	return *this->destination;
+	return graph[this->destination];
 }

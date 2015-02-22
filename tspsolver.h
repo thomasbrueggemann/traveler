@@ -44,8 +44,8 @@ private:
 		// of some non-static data (sortascending)
 		bool operator() (Vertex a, Vertex &b)
 		{
-			Edge *eA = a.FindEdgeTo(m->currentNode);
-			Edge *eB = b.FindEdgeTo(m->currentNode);
+			Edge *eA = a.FindEdgeTo(m->network, m->currentNode);
+			Edge *eB = b.FindEdgeTo(m->network, m->currentNode);
 
 			return (eA->GetWeight() < eB->GetWeight());
 		}
@@ -56,7 +56,6 @@ public:
 
 	float CalculatePathCosts(Path s);
 	void SetStartNode(int start_node);
-	//void SetPartialProblem(Path path);
 	Path GetUnvisitedNodes(Path s);
 	void Solve(int max_steps);
 	Path GetBestPath();

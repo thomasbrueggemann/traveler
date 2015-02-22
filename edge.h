@@ -8,20 +8,22 @@
 #include "vertex.h"
 
 class Vertex;
+typedef std::vector<Vertex> NetworkGraph;
+
 class Edge
 {
 private:
-	Vertex *source;
-	Vertex *destination;
+	int source;
+	int destination;
 	float weight;
 	
 public:
 	Edge();
 	Edge(float weight);
-	void CreateConnection(Vertex &source, Vertex &destination);
+	void CreateConnection(Vertex& source, Vertex& destination);
 	float GetWeight();
-	Vertex GetSource();
-	Vertex GetDestination();
+	Vertex GetSource(NetworkGraph& graph);
+	Vertex GetDestination(NetworkGraph& graph);
 };
 
 #endif

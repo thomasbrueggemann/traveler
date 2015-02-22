@@ -7,24 +7,27 @@
 
 #include "edge.h"
 
+class Vertex;
+typedef std::vector<Vertex> NetworkGraph;
+
 class Edge;
 class Vertex
 {
 private:
-	std::string name;
+	int name;
 	std::vector<Edge> edges;
 	std::vector<Vertex> vertices; // adjacent vertices
 
 public:
 	Vertex();
-	Vertex(std::string name, std::vector<Edge> edges);
-	std::string GetName();
+	Vertex(int, std::vector<Edge> edges);
+	int GetName();
 	Edge GetEdge(int idx);
 	std::vector<Edge> GetEdges();
 	void AddVertice(Vertex vertex);
 	std::vector<Vertex> GetVertices();
 	bool Compare(Vertex compareTo);
-	Edge* FindEdgeTo(Vertex &destination);
+	Edge* FindEdgeTo(NetworkGraph graph, Vertex &destination);
 };
 
 #endif

@@ -23,22 +23,6 @@ int main(int argc, const char *argv[])
 	cout << "TRAVELER v1.0" << endl;
 	cout << "=============" << endl;
 
-	// TEST EDGE & VERTEX
-	Edge e1(5.5);
-	Edge e2(10.0);
-
-	std::vector<Edge> edges;
-	edges.push_back(e1);
-	edges.push_back(e2);
-
-	Vertex v1("hi", edges);
-	Vertex v2("ho", edges);
-
-	e1.CreateConnection(v1, v2);
-
-	Vertex vNew = e1.GetSource();
-	cout << vNew.GetName() << endl;
-
 	// TEST NETWORK
 	// https://router.project-osrm.org/table?loc=50.858003798201786,7.089035511016845&loc=50.855877178964974,7.087082862854003&loc=50.85498315721184,7.091696262359619&loc=50.85155591505696,7.088091373443603&z=16
 	// {"distance_table":[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]}

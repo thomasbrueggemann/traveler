@@ -2,14 +2,14 @@
  
 // Vertex constructor
 Vertex::Vertex() {}
-Vertex::Vertex(std::string name, std::vector<Edge> edges)
+Vertex::Vertex(int name, std::vector<Edge> edges)
 {
 	this->name = name;
 	this->edges = edges;
 }
 
 // GET NAME
-std::string Vertex::GetName()
+int Vertex::GetName()
 {
 	return this->name;
 }
@@ -50,12 +50,12 @@ bool Vertex::Compare(Vertex compareTo)
 }
 
 // FIND EDGE TO
-Edge* Vertex::FindEdgeTo(Vertex &destination)
+Edge* Vertex::FindEdgeTo(NetworkGraph graph, Vertex &destination)
 {
 	// loop all edges
 	for (auto &edge : this->edges)
 	{
-		if(edge.GetDestination().Compare(destination)) 
+		if(edge.GetDestination(graph).Compare(destination)) 
 		{
 			return &edge;
 		}

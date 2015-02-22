@@ -42,7 +42,7 @@ NetworkGraph Network::FromGraph(Graph graph)
 			edges.push_back(newEdge);
 		}
 
-		Vertex newVertex(std::to_string(i), edges);
+		Vertex newVertex(i, edges);
 		vertice_array.push_back(newVertex);
 	}
 

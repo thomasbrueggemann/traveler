@@ -29,7 +29,7 @@ float TSPSolver::CalculatePathCosts(Path s)
 		Vertex next_node = s[node_idx + 1];
 		
 		// add the costs
-		Edge *edgeTo = node.FindEdgeTo(next_node);
+		Edge *edgeTo = node.FindEdgeTo(this->network, next_node);
 		if(edgeTo != NULL) 
 		{
 			cost += edgeTo->GetWeight();
@@ -54,29 +54,7 @@ void TSPSolver::SetStartNode(int start_node)
 	this->currentNode = this->network[start_node];
 }
 
-// SET PARTIAL PROBLEM
-// This function is used to define a partial problem which then gets solved.
-// Every Path which would be some kind of parent will be marked as already solved.
-/*void TSPSolver::SetPartialProblem(Path path)
-{
-	if(path.size() > this->network.size()) 
-	{
-		throw "Path can not be longer then network!";
-	}
-
-	// reset our state
-	this->s.clear();
-	this->v.clear();
-	this->u.clear();
-
-	int pathIdx = 0;
-	for(Vertex &pathValue : path)
-	{
-		Vertex currentDepthNode = this->network[];
-		pathIdx++;
-	}
-}*/
-
+// GET UNVISITED NODES
 Path TSPSolver::GetUnvisitedNodes(Path s)
 {
 	Path u;
@@ -87,8 +65,8 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 		return u;
 	}
 
-	std::string s_name = s[s.size() - 1].GetName();
-	this->currentNode = this->network[boost::lexical_cast<int>(s_name)];
+	int s_name = s[s.size() - 1].GetName();
+	this->currentNode = this->network[s_name];
 
 	if(this->cutting == true) 
 	{
@@ -114,7 +92,7 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 		// it was already visited
 		for(Vertex &visitedNode : this->v[s.size() - 1])
 		{
-			Vertex dest = edge.GetDestination();
+			Vertex dest = edge.GetDestination(this->network);
 			if(visitedNode.Compare(dest) == true)
 			{
 				continuing = true;
@@ -127,7 +105,7 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 		// they are our parents, so we visited them already
 		for(Vertex &currentPathNode : s)
 		{
-			Vertex dest = edge.GetDestination();
+			Vertex dest = edge.GetDestination(this->network);
 			if(currentPathNode.Compare(dest) == true)
 			{
 				continuing = true;
@@ -144,7 +122,7 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 			if((currentPathCosts + edge.GetWeight()) >= this->best_cost)
 			{
 				// cut suboptimal path
-				Vertex destination = edge.GetDestination();
+				Vertex destination = edge.GetDestination(this->network);
 				this->v[s.size() - 1].push_back(destination);
 				unvisited = false; 
 			}
@@ -152,7 +130,7 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 
 		if(unvisited)
 		{
-			Vertex destination = edge.GetDestination();
+			Vertex destination = edge.GetDestination(this->network);
 			u.push_back(destination);
 		}
 	}

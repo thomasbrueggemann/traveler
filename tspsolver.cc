@@ -18,6 +18,11 @@ float TSPSolver::CalculatePathCosts(Path s)
 {
 	float cost = 0.0;
 
+	if(s.size() == 0)
+	{
+		return cost;
+	}
+
 	for(unsigned int node_idx = 0; node_idx < s.size() - 1; node_idx++)
 	{
 		Vertex node = s[node_idx];
@@ -25,7 +30,17 @@ float TSPSolver::CalculatePathCosts(Path s)
 		
 		// add the costs
 		Edge *edgeTo = node.FindEdgeTo(next_node);
-		cost += edgeTo->GetWeight();
+		if(edgeTo != NULL) 
+		{
+			cost += edgeTo->GetWeight();
+
+			if(DEBUG) 
+			{
+				std::cout << "cost of edge ";
+				std::cout << edgeTo->GetWeight() << std::endl;
+			}
+		}
+
 	}
 
 	return cost;
@@ -72,12 +87,18 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 		return u;
 	}
 
-	std::string s_name = s[s.size()].GetName();
+	std::string s_name = s[s.size() - 1].GetName();
 	this->currentNode = this->network[boost::lexical_cast<int>(s_name)];
 
 	if(this->cutting == true) 
 	{
 		currentPathCosts = this->CalculatePathCosts(s);
+
+		if(DEBUG)
+		{
+			std::cout << "currentPathCosts";
+			std::cout << currentPathCosts << std::endl;
+		}
 	}
 
 	for(Edge &edge : this->currentNode.GetEdges())
@@ -85,29 +106,36 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 		// filter impossible edges (loops or cuts)
 		if(edge.GetWeight() == INFINITY)
 		{
-			u.empty();
-			return u;
+			continue;
 		}
+
+		bool continuing = false;
 
 		// it was already visited
 		for(Vertex &visitedNode : this->v[s.size() - 1])
 		{
-			if(visitedNode.Compare(edge.GetDestination()) == true)
+			Vertex dest = edge.GetDestination();
+			if(visitedNode.Compare(dest) == true)
 			{
-				u.empty();
-				return u;
+				continuing = true;
+				break;
 			}
 		}
+
+		if(continuing) continue;
 
 		// they are our parents, so we visited them already
 		for(Vertex &currentPathNode : s)
 		{
-			if(currentPathNode.Compare(edge.GetDestination()) == true)
+			Vertex dest = edge.GetDestination();
+			if(currentPathNode.Compare(dest) == true)
 			{
-				u.empty();
-				return u;
+				continuing = true;
+				break;
 			}
 		}
+
+		if(continuing) continue;
 
 		bool unvisited = true;
 
@@ -122,7 +150,7 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 			}
 		}
 
-		if(unvisited == true)
+		if(unvisited)
 		{
 			Vertex destination = edge.GetDestination();
 			u.push_back(destination);
@@ -136,31 +164,39 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 // Solve the traveling salesman problem through an iterative backtracking
 void TSPSolver::Solve(int max_steps)
 {
-	milliseconds starttime;
+	float starttime;
 
 	if(DEBUG) 
 	{
+		std::cout << "start tsp solving" << std::endl;
 		starttime = duration_cast< milliseconds >(
 		    high_resolution_clock::now().time_since_epoch()
-		);
+		).count();
 	}
 
-	// push our root path nd its already visited nodes if we do not have some prepared path (sub-tree solving)
+	// push our root path and its already visited nodes if we do not have some prepared path (sub-tree solving)
 	if(this->s.size() == 0) 
 	{
-		this->s.push_back(this->currentNode);
+		Vertex tmp = this->currentNode;
+		this->s.push_back(tmp);
 		std::vector<Vertex> empty;
 		this->v.push_back(empty);
 	}
 
-	while(this->u.size() > 0)
+	while(this->s.size() > 0)
 	{
 		if(max_steps-- <= 0) 
 		{
-			break;
+			return;
 		}
 
 		this->u = this->GetUnvisitedNodes(this->s);
+
+		if(DEBUG)
+		{
+			std::cout << "unvisited nodes";
+			std::cout << this->u.size() << std::endl;
+		}
 
 		// traverse unvisited
 		if(this->u.size() > 0)
@@ -178,6 +214,7 @@ void TSPSolver::Solve(int max_steps)
 
 			this->currentNode = this->u[0];
 			this->u.erase(this->u.begin());
+			this->s.push_back(this->currentNode);
 		}
 
 		// no traversal possible
@@ -197,9 +234,16 @@ void TSPSolver::Solve(int max_steps)
 				}
 			}
 
-			if(this->s.size() > 0)
+			if(this->s.size() > 1)
 			{
-				this->v[this->s.size() - 2].push_back(this->s.back());
+				Vertex tmp = this->s.back();
+
+				if(DEBUG)
+				{
+					std::cout << this->s.size() << std::endl;
+				}
+
+				this->v[this->s.size() - 2].push_back(tmp);
 				this->s.pop_back();
 				this->currentNode = this->s[this->s.size() - 1];
 			}
@@ -212,12 +256,21 @@ void TSPSolver::Solve(int max_steps)
 		}
 
 		// we got a complete path, print it
-		if(this->s.size() == this->network.size())
+		if(this->s.size() == this->network.size() && DEBUG)
 		{
 			for(Vertex &node : this->s)
 			{
 				std::cout << node.GetName() << std::endl;
 			}
+
+			float endtime = duration_cast< milliseconds >(
+			    high_resolution_clock::now().time_since_epoch()
+			).count();
+
+			float duration = endtime - starttime;
+			std::cout << "tsp solving took ";
+			std::cout << duration;
+			std::cout << " milliseconds" << std::endl;
 		}
 	}
 }

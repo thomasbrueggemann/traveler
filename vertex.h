@@ -26,8 +26,9 @@ public:
 	std::vector<Edge> GetEdges();
 	void AddVertice(Vertex vertex);
 	std::vector<Vertex> GetVertices();
-	bool Compare(Vertex compareTo);
+	bool Equals(Vertex compareTo);
 	Edge* FindEdgeTo(NetworkGraph graph, Vertex &destination);
+	void Print();
 };
 
 #endif

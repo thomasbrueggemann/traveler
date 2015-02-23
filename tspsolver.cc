@@ -74,13 +74,19 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 
 		if(DEBUG)
 		{
-			std::cout << "currentPathCosts";
+			std::cout << "currentPathCosts: ";
 			std::cout << currentPathCosts << std::endl;
 		}
 	}
 
 	for(Edge &edge : this->currentNode.GetEdges())
 	{
+		if(DEBUG)
+		{
+			std::cout << "edge weight: ";
+			std::cout << edge.GetWeight() << std::endl;
+		}
+
 		// filter impossible edges (loops or cuts)
 		if(edge.GetWeight() == INFINITY)
 		{
@@ -93,8 +99,14 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 		for(Vertex &visitedNode : this->v[s.size() - 1])
 		{
 			Vertex dest = edge.GetDestination(this->network);
-			if(visitedNode.Compare(dest) == true)
+			if(visitedNode.Equals(dest))
 			{
+				if(DEBUG)
+				{
+					std::cout << "already visited" << std::endl;
+					visitedNode.Print();
+				}
+
 				continuing = true;
 				break;
 			}
@@ -106,8 +118,14 @@ Path TSPSolver::GetUnvisitedNodes(Path s)
 		for(Vertex &currentPathNode : s)
 		{
 			Vertex dest = edge.GetDestination(this->network);
-			if(currentPathNode.Compare(dest) == true)
+			if(currentPathNode.Equals(dest))
 			{
+				if(DEBUG)
+				{
+					std::cout << "parent already visited" << std::endl;
+					currentPathNode.Print();
+				}
+
 				continuing = true;
 				break;
 			}

@@ -38,8 +38,8 @@ std::vector<Vertex> Vertex::GetVertices()
 	return this->vertices;
 }
 
-// COMPARE
-bool Vertex::Compare(Vertex compareTo)
+// EQUALS
+bool Vertex::Equals(Vertex compareTo)
 {
 	if(this->GetName() == compareTo.GetName()) 
 	{
@@ -55,11 +55,19 @@ Edge* Vertex::FindEdgeTo(NetworkGraph graph, Vertex &destination)
 	// loop all edges
 	for (auto &edge : this->edges)
 	{
-		if(edge.GetDestination(graph).Compare(destination)) 
+		if(edge.GetDestination(graph).Equals(destination)) 
 		{
 			return &edge;
 		}
 	}
 
 	return NULL;
+}
+
+// PRINT
+void Vertex::Print()
+{
+	std::cout << "Vertex (";
+	std::cout << this->GetName();
+	std::cout << ")" << std::endl;
 }

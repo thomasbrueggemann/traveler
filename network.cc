@@ -55,17 +55,26 @@ NetworkGraph Network::FromGraph(Graph graph)
 		}
 	}
 
+	NetworkGraph final_array;
+
 	// wire edges
 	for(Vertex &v : vertice_array)
 	{
+		std::vector<Edge> tmp_edges;
+
 		int i = 0;
 		for(Edge &e : v.GetEdges()) {
 
 			Vertex vCon = vertice_array[i];
-			e.CreateConnection(v, vCon);
 			i++;
+			
+			e.CreateConnection(v, vCon);
+			tmp_edges.push_back(e);
 		}
+		
+		Vertex tmp_vertex(v.GetName(), tmp_edges);
+		final_array.push_back(tmp_vertex);
 	}
 
-	return vertice_array;
+	return final_array;
 }

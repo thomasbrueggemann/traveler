@@ -173,8 +173,8 @@ void TSPSolver::Solve(int max_steps)
 	// push our root path and its already visited nodes if we do not have some prepared path (sub-tree solving)
 	if(this->s.size() == 0) 
 	{
-		Vertex tmp = this->currentNode;
-		this->s.push_back(tmp);
+		this->s.push_back(this->currentNode);
+
 		std::vector<Vertex> empty;
 		this->v.push_back(empty);
 	}
@@ -190,7 +190,7 @@ void TSPSolver::Solve(int max_steps)
 
 		if(DEBUG)
 		{
-			std::cout << "unvisited nodes";
+			std::cout << "unvisited nodes: ";
 			std::cout << this->u.size() << std::endl;
 		}
 
@@ -199,9 +199,15 @@ void TSPSolver::Solve(int max_steps)
 		{
 			// reset visited nodes for upcoming layer
 			std::vector<Vertex> empty;
+
+			if(this->v.size() == 0) {
+				std::vector<std::vector<Vertex>> tmp_v;
+				this->v = tmp_v;
+			}
+
 			this->v[this->s.size()] = empty;
 
-			if(this->min_heuristic == true)
+			if(this->min_heuristic)
 			{
 				// sort by min path
 				sortstruct s(this);

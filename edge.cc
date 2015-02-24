@@ -1,9 +1,17 @@
 #include "edge.h"
  
 // Edge constructor
-Edge::Edge() {}
+Edge::Edge() 
+{
+	this->source = -1;
+	this->destination = -1;
+	this->weight = -1;
+}
+
 Edge::Edge(float weight)
 {
+	this->source = -1;
+	this->destination = -1;
 	this->weight = weight;
 }
 
@@ -30,4 +38,15 @@ Vertex Edge::GetSource(NetworkGraph& graph)
 Vertex Edge::GetDestination(NetworkGraph& graph)
 {
 	return graph[this->destination];
+}
+
+// PRINT 
+void Edge::Print()
+{
+	std::cout << "Edge (";
+	std::cout << this->GetWeight();
+	std::cout << "), Src: ";
+	std::cout << this->source;
+	std::cout << ", Dst: ";
+	std::cout << this->destination << std::endl;
 }

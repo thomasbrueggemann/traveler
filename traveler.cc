@@ -35,6 +35,18 @@ int main(int argc, const char *argv[])
 	Network net;
 	NetworkGraph net_graph = net.FromGraph(graph);
 
+	for(Vertex &v : net_graph)
+	{
+		v.Print();
+
+		for(Edge &e : v.GetEdges())
+		{
+			e.Print();
+		}
+	}
+
+	cout << "===========" << endl;
+
 	Vertex vFirst = net_graph[0];
 	cout << vFirst.GetName() << endl;
 	cout << "net_graph size: ";

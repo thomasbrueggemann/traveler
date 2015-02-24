@@ -24,6 +24,7 @@ public:
 	float GetWeight();
 	Vertex GetSource(NetworkGraph& graph);
 	Vertex GetDestination(NetworkGraph& graph);
+	void Print();
 };
 
 #endif

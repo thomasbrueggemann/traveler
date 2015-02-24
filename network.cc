@@ -47,9 +47,9 @@ NetworkGraph Network::FromGraph(Graph graph)
 	}
 
 	// wire the nodes
-	for(auto &oV : vertice_array)
+	for(Vertex &oV : vertice_array)
 	{
-		for(auto &iV : vertice_array)
+		for(Vertex &iV : vertice_array)
 		{
 			oV.AddVertice(iV);
 		}

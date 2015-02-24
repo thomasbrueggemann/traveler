@@ -70,4 +70,5 @@ void Vertex::Print()
 	std::cout << "Vertex (";
 	std::cout << this->GetName();
 	std::cout << ")" << std::endl;
+	//std::cout << this->edges.size() << std::endl;
 }

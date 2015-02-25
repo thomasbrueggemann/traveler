@@ -3,7 +3,7 @@ CC	= g++-4.9
 CFLAGS	= -Wall -g -std=c++11
 LDFLAGS	= -L${PREFIX}/lib -pthread -lboost_system -lboost_thread
 EXE = traveler
-OBJ =  tspsolver.o network.o vertex.o edge.o
+OBJ =  tsp.o
 INC =
 
 all: $(EXE)

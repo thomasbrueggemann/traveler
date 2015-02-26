@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <random>
 #include <stdlib.h>
 
 typedef std::vector<int> Order;
@@ -19,7 +18,7 @@ private:
 	float shortestDistance;
 
 	int RandomIntFromInterval(int min, int max);
-	float RandomFloatFromInterval(float min, float max);
+	float RandomFloat();
 	float GetTotalDistance(Order order);
 	Order GetNextArrangement(Order order);
 

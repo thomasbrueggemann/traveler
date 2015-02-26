@@ -20,12 +20,9 @@ int TSP::RandomIntFromInterval(int min, int max)
 }
 
 // RANDOM FLOAT FROM INTERVAL
-float TSP::RandomFloatFromInterval(float min, float max)
+float TSP::RandomFloat()
 {
-	std::default_random_engine generator;
- 	std::uniform_real_distribution<float> distribution(min, max);
-
- 	return distribution(generator);
+	return ((float)rand()/(float)(RAND_MAX)) * 1;
 }
 
 // GET TOTAL DISTANCE
@@ -91,7 +88,7 @@ void TSP::Anneal()
 		// if the new order has a smaller distance
 		// or if the new order has a larger distance but satisfies the Boltzman condition 
 		// then accept the arrangement
-		if((distanceDelta < 0) || (distanceDelta >= 0 && std::exp(-distanceDelta / temperature) > this->RandomFloatFromInterval(0.0, 1.0)))
+		if((distanceDelta < 0) || (distanceDelta >= 0 && std::exp(-distanceDelta / temperature) > this->RandomFloat()))
 		{
 			for(unsigned int i = 0; i < this->nextOrder.size(); i++)
 			{

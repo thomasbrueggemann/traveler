@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "tsp.h"
+#include "osrm.h"
 #include "json.h"
 
 #define EXIT_SUCCESS 0

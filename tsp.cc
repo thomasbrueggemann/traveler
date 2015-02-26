@@ -16,11 +16,7 @@ TSP::TSP(DistanceTable distances)
 // RANDOM INT FROM INTERVAL
 int TSP::RandomIntFromInterval(int min, int max)
 {
-	std::random_device seed;
-	std::mt19937 rng(seed());
-	std::uniform_int_distribution<int> gen(min, max); // uniform, unbiased
-
-	return gen(rng);
+	return rand() % (max - min) + min;
 }
 
 // RANDOM FLOAT FROM INTERVAL

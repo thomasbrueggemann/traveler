@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <stdlib.h>
 
 typedef std::vector<int> Order;
 typedef std::vector<std::vector<float>> DistanceTable;

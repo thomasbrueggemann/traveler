@@ -23,7 +23,7 @@ private:
 	Order GetNextArrangement(Order order);
 
 public:
-	TSP();
+	TSP(DistanceTable distances);
 	void Anneal();
 	Order GetCurrentOrder();
 	float GetShortestDistance();

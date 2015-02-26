@@ -25,22 +25,24 @@ int main(int argc, const char *argv[])
 	// https://router.project-osrm.org/table?loc=50.858003798201786,7.089035511016845&loc=50.855877178964974,7.087082862854003&loc=50.85498315721184,7.091696262359619&loc=50.85155591505696,7.088091373443603&z=16
 	// {"distance_table":[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]}
 	json table = json::parse("[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]");
-	DistanceTable table;
+	DistanceTable distancetable;
 
-	for(int i = 0; i < table.size(); i++)
+	for(unsigned int i = 0; i < table.size(); i++)
 	{
-		
+		std::vector<float> inner;
+		for(unsigned int j = 0; j < table[i].size(); j++)
+		{
+			inner.push_back(table[i][j]);
+		}
+		distancetable.push_back(inner);
 	}
 
-	/*table.push_back(0); table.push_back(329); table.push_back(477); table.push_back(861);
-	table.push_back(330); table.push_back(0); table.push_back(437); table.push_back(563);
-	table.push_back(478); table.push_back(437); table.push_back(0); table.push_back(665);
-	table.push_back(862); table.push_back(563); table.push_back(665); table.push_back(0);*/
-
-	TSP tsp(table);
+	TSP tsp(distancetable);
 	tsp.Anneal();
 
-
+	float bestCost = tsp.GetShortestDistance();
+	cout << "best costs: ";
+	cout << bestCost << endl;
 
 	return EXIT_SUCCESS;
 }

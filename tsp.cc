@@ -7,7 +7,7 @@ TSP::TSP(DistanceTable distances)
 	this->shortestDistance = 0.0;
 
 	// init the current order
-	for(int i = 0; i < distances.size(); i++)
+	for(unsigned int i = 0; i < distances.size(); i++)
 	{
 		this->currentOrder.push_back(i);
 	}
@@ -16,7 +16,8 @@ TSP::TSP(DistanceTable distances)
 // RANDOM INT FROM INTERVAL
 int TSP::RandomIntFromInterval(int min, int max)
 {
-	std::mt19937 rng(seed);
+	std::random_device seed;
+	std::mt19937 rng(seed());
 	std::uniform_int_distribution<int> gen(min, max); // uniform, unbiased
 
 	return gen(rng);
@@ -36,7 +37,7 @@ float TSP::GetTotalDistance(Order order)
 {
 	float distance;
 
-	for(int i = 0; i < order.size(); i++)
+	for(unsigned int i = 0; i < order.size(); i++)
 	{
 		int a = order[i];
 		int b = order[i + 1];
@@ -57,7 +58,7 @@ Order TSP::GetNextArrangement(Order order)
 {
 	Order newOrder;
 
-	for(int i = 0; i < order.length; i++)
+	for(unsigned int i = 0; i < order.size(); i++)
 	{
 		newOrder.push_back(i);
 	}
@@ -75,7 +76,7 @@ Order TSP::GetNextArrangement(Order order)
 }
 
 // ANNEAL
-void Anneal()
+void TSP::Anneal()
 {
 	int iteration = -1;
 
@@ -96,7 +97,7 @@ void Anneal()
 		// then accept the arrangement
 		if((distanceDelta < 0) || (distanceDelta >= 0 && std::exp(-distanceDelta / temperature) > this->RandomFloatFromInterval(0.0, 1.0)))
 		{
-			for(int i = 0; i < this->nextOrder.size(); i++)
+			for(unsigned int i = 0; i < this->nextOrder.size(); i++)
 			{
 				this->currentOrder[i] = this->nextOrder[i];
 			}

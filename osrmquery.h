@@ -14,7 +14,7 @@
 class OSRMQuery
 {
 private:
-	std::shared_ptr<OSRM> osrm;
+	//std::shared_ptr<OSRM> osrm;
 
 public:
 	OSRMQuery();

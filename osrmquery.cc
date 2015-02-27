@@ -5,7 +5,8 @@ OSRMQuery::OSRMQuery()
 {
 	ServerPaths paths;
 	paths["base"] = "";
-	this->osrm = std::make_shared<OSRM>(paths, false);
+	OSRM o(paths, false);
+	//this->osrm = std::make_shared<OSRM>(paths, false);
 } 
 
 // TABLE

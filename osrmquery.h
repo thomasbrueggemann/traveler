@@ -1,5 +1,5 @@
-#ifndef OSRM_H
-#define OSRM_H
+#ifndef OSRMQUERY_H
+#define OSRMQUERY_H
 
 #include <iostream>
 #include <string>
@@ -11,13 +11,14 @@
 #include <osrm/Reply.h>
 #include <osrm/ServerPaths.h>
 
-class OSRM
+class OSRMQuery
 {
 private:
+	std::shared_ptr<OSRM> osrm;
 
 public:
-	OSRM();
-	std::string Table()
+	OSRMQuery();
+	std::string Table();
 };
 
 #endif

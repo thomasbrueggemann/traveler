@@ -1,10 +1,10 @@
 PREFIX?=/usr/local
 CC	= g++-4.9
-CFLAGS	= -Wall -g -std=c++11
-LDFLAGS	= -L${PREFIX}/lib -pthread -lboost_system -lboost_thread -lOSRM
+CFLAGS	= -Wall -g -std=c++11 -I{PREFIX}/include/
+LDFLAGS	= -L${PREFIX}/lib -pthread -lboost_thread -lboost_system -lOSRM
 EXE = traveler
-OBJ =  osrm.o tsp.o
-INC = -I{PREFIX}/include
+OBJ = tsp.o osrmquery.o
+INC = 
 
 all: $(EXE)
 

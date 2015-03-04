@@ -5,19 +5,15 @@
 #include <string>
 #include <vector>
 
-// OSRM
-#include <osrm/OSRM.h>
-#include <osrm/RouteParameters.h>
-#include <osrm/Reply.h>
-#include <osrm/ServerPaths.h>
+#include "happyhttp.h"
 
-class OSRMQuery
+class OSRM
 {
 private:
 	//std::shared_ptr<OSRM> osrm;
 
 public:
-	OSRMQuery();
+	OSRM();
 	std::string Table();
 };
 

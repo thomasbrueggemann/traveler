@@ -1,8 +1,8 @@
 CC	= g++-4.9
-CFLAGS	= -Wall -g -std=c++14
+CFLAGS	= -Wall -g -std=c++14 -O
 LDFLAGS	=
 EXE = traveler
-OBJ = tsp.o happyhttp.o osrm.o
+OBJ = tsp.o osrm.o
 INC = 
 
 all: $(EXE)

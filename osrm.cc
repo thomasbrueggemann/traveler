@@ -1,7 +1,7 @@
 #include "osrm.h"
 
 // OSRM
-OSRM::OSRMQuery()
+OSRM::OSRM()
 {
 } 
 

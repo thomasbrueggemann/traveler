@@ -5,8 +5,6 @@
 #include <string>
 #include <vector>
 
-#include "happyhttp.h"
-
 class OSRM
 {
 private:

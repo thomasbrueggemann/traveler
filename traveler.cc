@@ -11,6 +11,8 @@
 #include "tsp.h"
 #include "json.h"
 
+#include "osrmquery.h"
+
 #define EXIT_SUCCESS 0
 
 using namespace std;

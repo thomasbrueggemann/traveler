@@ -1,8 +1,8 @@
 CC	= g++-4.9
-CFLAGS	= -Wall -g -std=c++14 -O
-LDFLAGS	=
+CFLAGS	= -Wall -g -std=c++14
+LDFLAGS	= `pkg-config libosrm --libs --static`
 EXE = traveler
-OBJ = tsp.o osrm.o
+OBJ = osrmquery.o tsp.o osrm.o
 INC = 
 
 all: $(EXE)

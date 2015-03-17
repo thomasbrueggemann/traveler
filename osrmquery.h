@@ -6,14 +6,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <v8.h>
 
 // OSRM
 #include <osrm/json_container.hpp>
 #include <osrm/libosrm_config.hpp>
 #include <osrm/osrm.hpp>
 #include <osrm/route_parameters.hpp>
-
-using json = nlohmann::json;
 
 typedef std::unique_ptr<OSRM> osrm_ptr;
 typedef std::unique_ptr<RouteParameters> route_parameters_ptr;

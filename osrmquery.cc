@@ -30,6 +30,10 @@ std::string OSRMQuery::Table(coordinates coords)
 	osrm::json::Object result;
 	this->osrm->RunQuery(*params, result);
 
-	//json resultJson = result;
-	return "";
+	v8::Local<v8::Value> output;
+	osrm::json::render(output, result);
+
+	// turn into standard string
+	v8::String::Utf8Value value(output);
+	return std::string(*value);
 }

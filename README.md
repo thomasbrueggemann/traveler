@@ -1,4 +1,4 @@
-# TRAVELER
+# Traveler
 
 A simulated annealing heuristic traveling salesman problem implementation using libOSRM for distance table generation
 

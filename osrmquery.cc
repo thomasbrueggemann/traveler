@@ -15,9 +15,21 @@ OSRMQuery::OSRMQuery(std::string base)
 } 
 
 // TABLE
-std::string OSRMQuery::Table()
+std::string OSRMQuery::Table(coordinates coords)
 {
-	//RouteParameters params();
-	//params->service = "table";
+	route_parameters_ptr params = make_unique<RouteParameters>();
+	params->service = "table";
+
+	// loop the coordinate pairs
+	for(unsigned int i = 0; i < coords.size(); i++) 
+	{
+		params->coordinates.emplace_back(coords[i].first, coords[i].second);
+	}
+
+	// run the query
+	osrm::json::Object result;
+	this->osrm->RunQuery(*params, result);
+
+	//json resultJson = result;
 	return "";
 }

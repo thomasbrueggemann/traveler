@@ -1,6 +1,8 @@
 #ifndef OSRMQUERY_H
 #define OSRMQUERY_H
 
+#include "json_v8_renderer.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,8 +13,11 @@
 #include <osrm/osrm.hpp>
 #include <osrm/route_parameters.hpp>
 
+using json = nlohmann::json;
+
 typedef std::unique_ptr<OSRM> osrm_ptr;
 typedef std::unique_ptr<RouteParameters> route_parameters_ptr;
+typedef std::vector<std::pair<int, int>> coordinates;
 
 namespace 
 {
@@ -31,7 +36,7 @@ private:
 
 public:
 	OSRMQuery(std::string base);
-	std::string Table();
+	std::string Table(coordinates coords);
 };
 
 #endif

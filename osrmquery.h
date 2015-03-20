@@ -1,12 +1,9 @@
 #ifndef OSRMQUERY_H
 #define OSRMQUERY_H
 
-#include "json_v8_renderer.h"
-
 #include <iostream>
 #include <string>
 #include <vector>
-#include <v8.h>
 
 // OSRM
 #include <osrm/json_container.hpp>

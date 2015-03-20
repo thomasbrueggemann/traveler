@@ -1,5 +1,5 @@
 CC	= g++-4.9
-CFLAGS	= -Wall -g -std=c++11 `pkg-config libosrm --cflags` -I/usr/include/nodejs/src 
+CFLAGS	= -Wall -g -std=c++11 `pkg-config libosrm --cflags`
 LDFLAGS	= `pkg-config libosrm --libs --static` -lrt
 EXE = traveler
 OBJ = osrmquery.o tsp.o

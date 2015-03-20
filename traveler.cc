@@ -29,6 +29,7 @@ int main(int argc, const char *argv[])
 	cout << "TRAVELER v1.0" << endl;
 	cout << "=============" << endl;
 
+	cout << "Reading OSRM file ..." << endl;
 	OSRMQuery osrm("/home/thomas/Downloads/koeln-regbez-latest.osrm");
 
 	// http-server at port 8080 using 4 threads
@@ -55,12 +56,24 @@ int main(int argc, const char *argv[])
 		} 
 		
 		// TEST NETWORK
-		// https://router.project-osrm.org/table?loc=50.858003798201786,7.089035511016845&loc=50.855877178964974,7.087082862854003&loc=50.85498315721184,7.091696262359619&loc=50.85155591505696,7.088091373443603&z=16
+		// https://router.project-osrm.org/table?loc=50.858003798201786,7.089035511016845&loc=50.855877178964974,7.087082862854003&loc=50.85498315721184,7.091696262359619&loc=50.85155591505696,7.088091373443603<&z=16
 		// {"distance_table":[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]}
 		//json table = json::parse("[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]");
 		
 		// query osrm
-		DistanceTable distancetable = osrm.Table(coords);
+		//DistanceTable distancetable = osrm.Table(coords);
+
+		json table = json::parse("[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]");
+		DistanceTable distancetable;
+		for(unsigned int i = 0; i < table.size(); i++)
+		{
+			vector<float> inner;
+			for(unsigned int j = 0; j < table[i].size(); j++)
+			{
+				inner.push_back(table[i][j]);
+			}
+			distancetable.push_back(inner);
+		}
 
 		// solve tsp
 		TSP tsp(distancetable);

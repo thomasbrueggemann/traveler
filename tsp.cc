@@ -19,16 +19,16 @@ int TSP::RandomIntFromInterval(int min, int max)
 	return rand() % (max - min) + min;
 }
 
-// RANDOM DOUBLE FROM INTERVAL
-double TSP::RandomDouble()
+// RANDOM FLOAT FROM INTERVAL
+float TSP::RandomFloat()
 {
-	return ((double)rand()/(double)(RAND_MAX)) * 1;
+	return ((float)rand()/(float)(RAND_MAX)) * 1;
 }
 
 // GET TOTAL DISTANCE
-double TSP::GetTotalDistance(Order order)
+float TSP::GetTotalDistance(Order order)
 {
-	double distance;
+	float distance;
 
 	for(unsigned int i = 0; i < order.size(); i++)
 	{
@@ -73,12 +73,12 @@ void TSP::Anneal()
 {
 	int iteration = -1;
 
-	double temperature = 10000.0;
-	double distanceDelta = 0.0;
-	double coolingRate = 0.9999;
-	double absoluteTemperature = 0.00001;
+	float temperature = 10000.0;
+	float distanceDelta = 0.0;
+	float coolingRate = 0.9999;
+	float absoluteTemperature = 0.00001;
 
-	double distance = this->GetTotalDistance(this->currentOrder);
+	float distance = this->GetTotalDistance(this->currentOrder);
 
 	while(temperature > absoluteTemperature)
 	{
@@ -88,7 +88,7 @@ void TSP::Anneal()
 		// if the new order has a smaller distance
 		// or if the new order has a larger distance but satisfies the Boltzman condition 
 		// then accept the arrangement
-		if((distanceDelta < 0) || (distanceDelta >= 0 && std::exp(-distanceDelta / temperature) > this->RandomDouble()))
+		if((distanceDelta < 0) || (distanceDelta >= 0 && std::exp(-distanceDelta / temperature) > this->RandomFloat()))
 		{
 			for(unsigned int i = 0; i < this->nextOrder.size(); i++)
 			{
@@ -114,7 +114,7 @@ Order TSP::GetCurrentOrder()
 }
 
 // GET SHORTEST DISTANCE
-double TSP::GetShortestDistance()
+float TSP::GetShortestDistance()
 {
 	return this->shortestDistance;
 }

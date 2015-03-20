@@ -39,12 +39,12 @@ DistanceTable OSRMQuery::Table(Coordinates coords)
 	// loop distance table rows
 	for(osrm::json::Value row : distance_table.values)
 	{
-		std::vector<double> innerRow;
+		std::vector<float> innerRow;
 
 		// loop this row into cells
 		for(osrm::json::Value cell : row.get<osrm::json::Array>().values)
 		{
-			double cellValue = cell.get<osrm::json::Number>().value;
+			float cellValue = cell.get<osrm::json::Number>().value;
 			innerRow.push_back(cellValue);
 		}
 

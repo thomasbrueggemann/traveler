@@ -8,7 +8,7 @@
 #include <cmath>
 
 typedef std::vector<int> Order;
-typedef std::vector<std::vector<double>> DistanceTable;
+typedef std::vector<std::vector<float>> DistanceTable;
 
 class TSP
 {
@@ -16,18 +16,18 @@ private:
 	DistanceTable distances;
 	Order currentOrder;
 	Order nextOrder;
-	double shortestDistance;
+	float shortestDistance;
 
 	int RandomIntFromInterval(int min, int max);
-	double RandomDouble();
-	double GetTotalDistance(Order order);
+	float RandomFloat();
+	float GetTotalDistance(Order order);
 	Order GetNextArrangement(Order order);
 
 public:
 	TSP(DistanceTable distances);
 	void Anneal();
 	Order GetCurrentOrder();
-	double GetShortestDistance();
+	float GetShortestDistance();
 };
 
 #endif

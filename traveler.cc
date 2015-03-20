@@ -45,7 +45,7 @@ int main(int argc, const char *argv[])
 
 		// fetch parameters
 		json loc = json::parse(content);
-		coordinates coords;
+		Coordinates coords;
 
 		for(unsigned int i = 0; i < loc.size(); i++) {
 			int lat = loc[i][0].get<double>() * COORDINATE_PRECISION;
@@ -53,38 +53,21 @@ int main(int argc, const char *argv[])
 			pair<int, int> coord(lat, lon);
 			coords.push_back(coord);
 		} 
-
-		string dist = osrm.Table(coords);
-		cout << dist << endl;
-
-		// convert to integers
-		//int start = boost::lexical_cast<int>(str_start);
-		//int stop = boost::lexical_cast<int>(str_stop);
-	
-		// query osrm
-
+		
 		// TEST NETWORK
 		// https://router.project-osrm.org/table?loc=50.858003798201786,7.089035511016845&loc=50.855877178964974,7.087082862854003&loc=50.85498315721184,7.091696262359619&loc=50.85155591505696,7.088091373443603&z=16
 		// {"distance_table":[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]}
-		json table = json::parse("[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]");
-		DistanceTable distancetable;
-
-		for(unsigned int i = 0; i < table.size(); i++)
-		{
-			vector<float> inner;
-			for(unsigned int j = 0; j < table[i].size(); j++)
-			{
-				inner.push_back(table[i][j]);
-			}
-			distancetable.push_back(inner);
-		}
+		//json table = json::parse("[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]");
+		
+		// query osrm
+		DistanceTable distancetable = osrm.Table(coords);
 
 		// solve tsp
 		TSP tsp(distancetable);
 		tsp.Anneal();
 
 		// print result
-		float bestCost = tsp.GetShortestDistance();
+		double bestCost = tsp.GetShortestDistance();
 		cout << bestCost << endl;
 
 		std::string s = request->path;

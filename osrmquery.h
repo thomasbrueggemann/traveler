@@ -11,9 +11,11 @@
 #include <osrm/osrm.hpp>
 #include <osrm/route_parameters.hpp>
 
+#include "tsp.h"
+
 typedef std::unique_ptr<OSRM> osrm_ptr;
 typedef std::unique_ptr<RouteParameters> route_parameters_ptr;
-typedef std::vector<std::pair<int, int>> coordinates;
+typedef std::vector<std::pair<int, int>> Coordinates;
 
 namespace 
 {
@@ -32,7 +34,7 @@ private:
 
 public:
 	OSRMQuery(std::string base);
-	std::string Table(coordinates coords);
+	DistanceTable Table(Coordinates coords);
 };
 
 #endif

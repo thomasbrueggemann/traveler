@@ -15,7 +15,7 @@ OSRMQuery::OSRMQuery(std::string base)
 } 
 
 // TABLE
-std::string OSRMQuery::Table(coordinates coords)
+DistanceTable OSRMQuery::Table(Coordinates coords)
 {
 	route_parameters_ptr params = make_unique<RouteParameters>();
 	params->service = "table";
@@ -30,6 +30,26 @@ std::string OSRMQuery::Table(coordinates coords)
 	osrm::json::Object result;
 	this->osrm->RunQuery(*params, result);
 
+	// the table to return eventually
+	DistanceTable table;
 
-	return "";
+	// fetch the distance table result
+	osrm::json::Array distance_table = result.values["distance_table"].get<osrm::json::Array>();
+	
+	// loop distance table rows
+	for(osrm::json::Value row : distance_table.values)
+	{
+		std::vector<double> innerRow;
+
+		// loop this row into cells
+		for(osrm::json::Value cell : row.get<osrm::json::Array>().values)
+		{
+			double cellValue = cell.get<osrm::json::Number>().value;
+			innerRow.push_back(cellValue);
+		}
+
+		table.push_back(innerRow);
+	}
+	
+	return table;
 }

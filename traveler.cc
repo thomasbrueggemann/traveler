@@ -88,7 +88,7 @@ int main(int argc, const char *argv[])
 		jsonResult["coordinates"] = jsonCoordinates;
 
 		string s = jsonResult.dump();
-		response << "HTTP/1.1 200 OK\r\nContent-Length: " << s.length() << "\r\n\r\n" << s;
+		response << "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: " << s.length() << "\r\n\r\n" << s;
 	};
 
 	thread server_thread([&server]()

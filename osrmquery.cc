@@ -44,7 +44,7 @@ DistanceTable OSRMQuery::Table(Coordinates coords)
 		// loop this row into cells
 		for(osrm::json::Value cell : row.get<osrm::json::Array>().values)
 		{
-			float cellValue = cell.get<osrm::json::Number>().value;
+			float cellValue = (float)cell.get<osrm::json::Number>().value;
 			innerRow.push_back(cellValue);
 		}
 

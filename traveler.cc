@@ -24,6 +24,8 @@ using namespace std;
 using namespace SimpleWeb;
 using json = nlohmann::json;
 
+typedef std::vector<std::vector<float>> TSPResult;
+
 int main(int argc, const char *argv[])
 {
 	cout << "TRAVELER v1.0" << endl;
@@ -44,10 +46,13 @@ int main(int argc, const char *argv[])
 		request->content >> ss.rdbuf();
 		string content = ss.str();
 
+		cout << request->path << endl;
+
 		// fetch parameters
 		json loc = json::parse(content);
 		Coordinates coords;
 
+		// prepare coordinate pairs for OSRM
 		for(unsigned int i = 0; i < loc.size(); i++) {
 			int lat = loc[i][0].get<double>() * COORDINATE_PRECISION;
 			int lon = loc[i][1].get<double>() * COORDINATE_PRECISION;
@@ -55,35 +60,34 @@ int main(int argc, const char *argv[])
 			coords.push_back(coord);
 		} 
 		
-		// TEST NETWORK
-		// https://router.project-osrm.org/table?loc=50.858003798201786,7.089035511016845&loc=50.855877178964974,7.087082862854003&loc=50.85498315721184,7.091696262359619&loc=50.85155591505696,7.088091373443603<&z=16
-		// {"distance_table":[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]}
-		//json table = json::parse("[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]");
-		
-		// query osrm
-		//DistanceTable distancetable = osrm.Table(coords);
-
-		json table = json::parse("[[0,329,477,861],[330,0,437,563],[478,437,0,665],[862,563,665,0]]");
-		DistanceTable distancetable;
-		for(unsigned int i = 0; i < table.size(); i++)
-		{
-			vector<float> inner;
-			for(unsigned int j = 0; j < table[i].size(); j++)
-			{
-				inner.push_back(table[i][j]);
-			}
-			distancetable.push_back(inner);
-		}
+		// query OSRM
+		DistanceTable distancetable = osrm.Table(coords);
 
 		// solve tsp
 		TSP tsp(distancetable);
 		tsp.Anneal();
 
-		// print result
-		double bestCost = tsp.GetShortestDistance();
-		cout << bestCost << endl;
+		// prepare json result
+		TSPResult resultCoordinates;
+		Order resultOrder = tsp.GetCurrentOrder();
+		for(int orderEntry : resultOrder)
+		{
+			pair<int, int> innerPair = coords[orderEntry];
 
-		std::string s = request->path;
+			vector<float> inner;
+			inner.push_back(innerPair.first / COORDINATE_PRECISION);
+			inner.push_back(innerPair.second / COORDINATE_PRECISION);
+
+			resultCoordinates.push_back(inner);
+		}
+
+		json jsonCoordinates(resultCoordinates);
+
+		json jsonResult;
+		jsonResult["cost"] = tsp.GetShortestDistance();
+		jsonResult["coordinates"] = jsonCoordinates;
+
+		string s = jsonResult.dump();
 		response << "HTTP/1.1 200 OK\r\nContent-Length: " << s.length() << "\r\n\r\n" << s;
 	};
 

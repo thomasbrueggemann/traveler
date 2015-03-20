@@ -28,20 +28,20 @@ float TSP::RandomFloat()
 // GET TOTAL DISTANCE
 float TSP::GetTotalDistance(Order order)
 {
-	float distance;
+	float distance = 0.0;
 
-	for(unsigned int i = 0; i < order.size(); i++)
+	for(unsigned int i = 0; i < order.size() - 1; i++)
 	{
 		int a = order[i];
 		int b = order[i + 1];
 		distance += this->distances[a][b];
 	}
 
-	if(order.size() > 1)
+	/*if(order.size() > 1)
 	{
 		int last = order[order.size() - 1];
 		distance += this->distances[last][0];
-	}
+	}*/
 
 	return distance;
 }
